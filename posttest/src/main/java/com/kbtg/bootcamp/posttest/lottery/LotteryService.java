@@ -45,8 +45,8 @@ public class LotteryService {
         lotteryRepository.save(lottery);
 
         UserTicket userTicket = new UserTicket(     userId,
-                                                    lottery.getPrice(),
-                                                   1
+                                                    lottery.getPrice()
+
                                                 );
 
         userTicket.setLottery(lottery);
@@ -58,6 +58,8 @@ public class LotteryService {
     public List<Lottery> getAllLotteries(){
         return lotteryRepository.findAll();
     }
+
+
 
     public List<Lottery> getAllAvailableLotteries(){
         return lotteryRepository.findAllAvailableLotteries();
