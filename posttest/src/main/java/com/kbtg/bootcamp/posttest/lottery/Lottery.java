@@ -58,6 +58,14 @@ public class Lottery {
     public void setUserTickets(List<UserTicket> userTickets) {
         this.userTickets = userTickets;
     }
+
+    public void incAmount(){
+        this.amount +=1;
+    }
+
+    public void decAmount(){
+        this.amount-=1;
+    }
 }
 
 

@@ -41,7 +41,7 @@ public class LotteryService {
         if(totalAmount<1)
             throw new LotteryException("ticket" + ticketId + "out of stock");
 
-        lottery.setAmount(totalAmount-1);
+        lottery.decAmount();
         lotteryRepository.save(lottery);
 
         UserTicket userTicket = new UserTicket(     userId,
@@ -53,6 +53,20 @@ public class LotteryService {
         userTicketRepository.save(userTicket);
         return Integer.toString(userTicket.getId()) ;
 
+    }
+    @Transactional
+    public void sellLottery(String userId,String ticketId){
+        List<UserTicket> listUserTicket = userTicketRepository.findByUserIdAndTicket(userId,ticketId);
+
+        if(listUserTicket.isEmpty())
+            throw new LotteryException("ticket" + ticketId + "or user id" + userId+ "does not exist");
+
+        for (UserTicket userTicket:listUserTicket) {
+            Lottery lottery = userTicket.getLottery();
+            lottery.incAmount();
+            lotteryRepository.save(lottery);
+        }
+        userTicketRepository.deleteByUserIdAndTicket(userId,ticketId);
     }
 
     public List<Lottery> getAllLotteries(){
