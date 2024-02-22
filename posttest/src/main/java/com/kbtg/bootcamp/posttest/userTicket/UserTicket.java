@@ -9,15 +9,20 @@ public class UserTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer  id;
-    private String user_id;
+    @Column(name = "user_id")
+    private String userId;
     @ManyToOne
     @JoinColumn(name = "ticket")
     private Lottery lottery;
     private int price;
 
-    public UserTicket(String userId, int pricePerQty, int amount) {
-        this.user_id = userId;
+    public UserTicket(String userId, int pricePerQty) {
+        this.userId = userId;
         this.price = pricePerQty;
+    }
+
+    public UserTicket(){
+
     }
 
     public void setLottery(Lottery lottery) {
@@ -25,5 +30,13 @@ public class UserTicket {
     }
     public Integer getId() {
         return id;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public Lottery getLottery() {
+        return lottery;
     }
 }
