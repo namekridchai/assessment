@@ -4,7 +4,6 @@ package com.kbtg.bootcamp.posttest.lottery;
 import com.kbtg.bootcamp.posttest.exception.LotteryException;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicket;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicketRepository;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,18 +67,6 @@ public class LotteryService {
             lotteryRepository.save(lottery);
         }
         userTicketRepository.deleteByUserIdAndTicket(userId,ticketId);
-//
-//        lottery.setAmount(totalAmount-1);
-//        lotteryRepository.save(lottery);
-//
-//        UserTicket userTicket = new UserTicket(     userId,
-//                lottery.getPrice()
-//
-//        );
-//
-//        userTicket.setLottery(lottery);
-//        userTicketRepository.save(userTicket);
-
     }
 
     public List<Lottery> getAllLotteries(){
