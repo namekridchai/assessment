@@ -4,6 +4,7 @@ package com.kbtg.bootcamp.posttest.lottery;
 import com.kbtg.bootcamp.posttest.exception.LotteryException;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicket;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicketRepository;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +42,7 @@ public class LotteryService {
         if(totalAmount<1)
             throw new LotteryException("ticket" + ticketId + "out of stock");
 
-        lottery.setAmount(totalAmount-1);
+        lottery.decAmount();
         lotteryRepository.save(lottery);
 
         UserTicket userTicket = new UserTicket(     userId,
@@ -52,6 +53,32 @@ public class LotteryService {
         userTicket.setLottery(lottery);
         userTicketRepository.save(userTicket);
         return Integer.toString(userTicket.getId()) ;
+
+    }
+    @Transactional
+    public void sellLottery(String userId,String ticketId){
+        List<UserTicket> listUserTicket = userTicketRepository.findByUserIdAndTicket(userId,ticketId);
+
+        if(listUserTicket.isEmpty())
+            throw new LotteryException("ticket" + ticketId + "or user id" + userId+ "does not exist");
+
+        for (UserTicket userTicket:listUserTicket) {
+            Lottery lottery = userTicket.getLottery();
+            lottery.incAmount();
+            lotteryRepository.save(lottery);
+        }
+        userTicketRepository.deleteByUserIdAndTicket(userId,ticketId);
+//
+//        lottery.setAmount(totalAmount-1);
+//        lotteryRepository.save(lottery);
+//
+//        UserTicket userTicket = new UserTicket(     userId,
+//                lottery.getPrice()
+//
+//        );
+//
+//        userTicket.setLottery(lottery);
+//        userTicketRepository.save(userTicket);
 
     }
 

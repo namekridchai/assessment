@@ -34,6 +34,15 @@ public class UserController {
         return new ResponseEntity<>(data, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{userId}/lotteries/{ticketId}")
+    public ResponseEntity<Object>  sellLottery(@PathVariable("userId") String user_id,
+                                              @PathVariable("ticketId") String ticket_id){
+        lotteryService.sellLottery(user_id, ticket_id);
+        Map<String,String> data = new HashMap<>();
+        data.put("ticket", ticket_id);
+        return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
+    }
+
     @GetMapping("/{userId}/lotteries")
     public ResponseEntity<Object>  buyLottery(@PathVariable("userId") String user_id
                                               ){
