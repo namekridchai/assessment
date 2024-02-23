@@ -16,18 +16,18 @@ import java.util.Map;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-    private LotteryService lotteryService;
+	private LotteryService lotteryService;
 
-    public AdminController(LotteryService lotteryService) {
-        this.lotteryService = lotteryService;
-    }
+	public AdminController(LotteryService lotteryService) {
+		this.lotteryService = lotteryService;
+	}
 
-    @PostMapping("/lotteries")
-    public ResponseEntity<Object> addLottery(@Validated @RequestBody LotteryRequest lotteryRequest){
-        this.lotteryService.addLottery(lotteryRequest);
-        Map<String, String> data = new HashMap<>();
-        data.put("ticket", lotteryRequest.ticket());
-        return new ResponseEntity<>(data, HttpStatus.CREATED);
+	@PostMapping("/lotteries")
+	public ResponseEntity<Object> addLottery(@Validated @RequestBody LotteryRequest lotteryRequest){
+		this.lotteryService.addLottery(lotteryRequest);
+		Map<String, String> data = new HashMap<>();
+		data.put("ticket", lotteryRequest.ticket());
+		return new ResponseEntity<>(data, HttpStatus.CREATED);
 
-    }
+	}
 }

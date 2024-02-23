@@ -11,61 +11,61 @@ import java.util.List;
 @Entity
 @Table(name = "lottery")
 public class Lottery {
-    @Id
-    private String ticket;
-    private int price;
+	@Id
+	private String ticket;
+	private int price;
 
-    private int amount;
+	private int amount;
 
-    @OneToMany(mappedBy = "lottery")
-    private List<UserTicket> userTickets;
+	@OneToMany(mappedBy = "lottery")
+	private List<UserTicket> userTickets;
 
-    public Lottery(String ticket, int price, int amount) {
-        this.ticket = ticket;
-        this.price = price;
-        this.amount = amount;
-    }
-    public Lottery(){}
+	public Lottery(String ticket, int price, int amount) {
+		this.ticket = ticket;
+		this.price = price;
+		this.amount = amount;
+	}
+	public Lottery(){}
 
-    public String getTicket() {
-        return ticket;
-    }
+	public String getTicket() {
+		return ticket;
+	}
 
-    public int getPrice() {
-        return price;
-    }
+	public int getPrice() {
+		return price;
+	}
 
-    public int getAmount() {
-        return amount;
-    }
+	public int getAmount() {
+		return amount;
+	}
 
-    public void setTicket(String ticket) {
-        this.ticket = ticket;
-    }
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
+	public void setPrice(int price) {
+		this.price = price;
+	}
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
 
-    public List<UserTicket> getUserTickets() {
-        return userTickets;
-    }
+	public List<UserTicket> getUserTickets() {
+		return userTickets;
+	}
 
-    public void setUserTickets(List<UserTicket> userTickets) {
-        this.userTickets = userTickets;
-    }
+	public void setUserTickets(List<UserTicket> userTickets) {
+		this.userTickets = userTickets;
+	}
 
-    public void addAmount(int addedAmount){
-        this.amount += addedAmount;
-    }
+	public void addAmount(int addedAmount){
+		this.amount += addedAmount;
+	}
 
-    public void decAmount(){
-        this.amount-=1;
-    }
+	public void decAmount(){
+		this.amount-=1;
+	}
 }
 
 

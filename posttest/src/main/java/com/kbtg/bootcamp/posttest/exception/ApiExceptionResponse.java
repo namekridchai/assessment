@@ -5,25 +5,25 @@ import org.springframework.http.HttpStatus;
 import java.time.ZonedDateTime;
 
 public class ApiExceptionResponse {
-    private final String message;
-    private final HttpStatus httpStatus;
-    private final ZonedDateTime zonedDateTime;
+	private final String message;
+	private final HttpStatus httpStatus;
+	private final ZonedDateTime zonedDateTime;
 
-    public ApiExceptionResponse(String message, HttpStatus httpStatus, ZonedDateTime zonedDateTime) {
-        this.message = message;
-        this.httpStatus = httpStatus;
-        this.zonedDateTime = zonedDateTime;
-    }
+	public ApiExceptionResponse(String message, HttpStatus httpStatus, ZonedDateTime zonedDateTime) {
+		this.message = message;
+		this.httpStatus = httpStatus;
+		this.zonedDateTime = zonedDateTime;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
+	public HttpStatus getHttpStatus() {
+		return httpStatus;
+	}
 
-    public ZonedDateTime getZonedDateTime() {
-        return zonedDateTime;
-    }
+	public ZonedDateTime getZonedDateTime() {
+		return zonedDateTime;
+	}
 }

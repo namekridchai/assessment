@@ -17,35 +17,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 class AdminControllerTest {
-    MockMvc mockMvc;
-    @Mock
-    LotteryService lotteryService;
+	MockMvc mockMvc;
+	@Mock
+	LotteryService lotteryService;
 
-    @BeforeEach
-    void setUp() {
-        AdminController adminController = new AdminController(lotteryService);
-        mockMvc = MockMvcBuilders.standaloneSetup(adminController)
+	@BeforeEach
+	void setUp() {
+		AdminController adminController = new AdminController(lotteryService);
+		mockMvc = MockMvcBuilders.standaloneSetup(adminController)
 //                .alwaysDo(print())
-                .build();
-    }
+				.build();
+	}
 
-    @Test
-    @DisplayName("when create lottery  POST: /admin/lotteries should return status 201 and body" +
-                " contain ticket number"
-    )
-    void addLottery() throws Exception {
+	@Test
+	@DisplayName("when create lottery  POST: /admin/lotteries should return status 201 and body" +
+				" contain ticket number"
+	)
+	void addLottery() throws Exception {
 
-        mockMvc.perform(
-                        post("/admin/lotteries")
-                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                                .accept(MediaType.APPLICATION_JSON)
-                                .content("{\"ticket\":\"123456\"," +
-                                        "\"price\":80," +
-                                        "\"amount\":1" +
-                                        "}"
-                                )
-                )
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.ticket", is("123456")));
-    }
+		mockMvc.perform(
+						post("/admin/lotteries")
+								.contentType(MediaType.APPLICATION_JSON_VALUE)
+								.accept(MediaType.APPLICATION_JSON)
+								.content("{\"ticket\":\"123456\"," +
+										"\"price\":80," +
+										"\"amount\":1" +
+										"}"
+								)
+				)
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.ticket", is("123456")));
+	}
 }

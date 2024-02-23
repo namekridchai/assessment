@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface LotteryRepository extends JpaRepository<Lottery,String> {
-    @Query(
-            value = "SELECT * FROM lottery l WHERE l.amount > 0",
-            nativeQuery = true)
-    List<Lottery> findAllAvailableLotteries();
+	@Query(
+			value = "SELECT * FROM lottery l WHERE l.amount > 0",
+			nativeQuery = true)
+	List<Lottery> findAllAvailableLotteries();
 }
