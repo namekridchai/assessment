@@ -59,8 +59,8 @@ public class Lottery {
         this.userTickets = userTickets;
     }
 
-    public void incAmount(){
-        this.amount +=1;
+    public void addAmount(int addedAmount){
+        this.amount += addedAmount;
     }
 
     public void decAmount(){

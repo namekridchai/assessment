@@ -4,8 +4,11 @@ import com.kbtg.bootcamp.posttest.lottery.Lottery;
 import com.kbtg.bootcamp.posttest.lottery.LotteryService;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicketResponse;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicketService;
+import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -26,8 +29,14 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/lotteries/{ticketId}")
-    public ResponseEntity<Object>  buyLottery(@PathVariable("userId") String user_id,
-                                             @PathVariable("ticketId") String ticket_id){
+    public ResponseEntity<Object>  buyLottery(
+                                                @Validated
+                                                @Pattern(regexp="[\\d]{10}")
+                                                @PathVariable("userId")  String user_id,
+
+                                                @Validated
+                                                @Pattern(regexp="[\\d]{6}")
+                                                @PathVariable("ticketId") String ticket_id){
         String user_ticket_id  = lotteryService.buyLottery(user_id, ticket_id);
         Map<String,String> data = new HashMap<>();
         data.put("id", user_ticket_id);
@@ -35,8 +44,13 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}/lotteries/{ticketId}")
-    public ResponseEntity<Object>  sellLottery(@PathVariable("userId") String user_id,
-                                              @PathVariable("ticketId") String ticket_id){
+    public ResponseEntity<Object>  sellLottery(   @Validated
+                                                  @Pattern(regexp="[\\d]{10}")
+                                                  @PathVariable("userId")  String user_id,
+
+                                                  @Validated
+                                                  @Pattern(regexp="[\\d]{6}")
+                                                  @PathVariable("ticketId") String ticket_id){
         lotteryService.sellLottery(user_id, ticket_id);
         Map<String,String> data = new HashMap<>();
         data.put("ticket", ticket_id);
@@ -44,7 +58,10 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/lotteries")
-    public ResponseEntity<Object>  buyLottery(@PathVariable("userId") String user_id
+    public ResponseEntity<Object>  buyLottery(
+                                                @Validated
+                                                @Pattern(regexp="[\\d]{10}")
+                                                @PathVariable("userId") String user_id
                                               ){
         UserTicketResponse userTicketResponse  = userTicketService.getUserTicket(user_id);
         return new ResponseEntity<>(userTicketResponse, HttpStatus.OK);
