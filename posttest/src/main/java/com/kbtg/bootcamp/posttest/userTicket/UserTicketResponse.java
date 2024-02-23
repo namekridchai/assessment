@@ -24,4 +24,18 @@ public class UserTicketResponse {
     public int getCost() {
         return cost;
     }
+    public boolean equals(Object o) {
+        UserTicketResponse u = (UserTicketResponse) o;
+        // If the object is compared with itself then return true
+        if ((u.getTicketList().equals(this.getTicketList())) &&
+                u.getCost()==this.getCost() &&
+                u.getCount()==this.getCount()
+        ) {
+            return true;
+        }
+        return  false;
+
+
+    }
 }
+

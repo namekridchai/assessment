@@ -22,11 +22,11 @@ public class LotteryService {
 
     @Transactional
     public void addLottery(LotteryRequest lotteryRequest){
-        Lottery ticket = new Lottery(   lotteryRequest.ticket(),
+        Lottery lottery = new Lottery(   lotteryRequest.ticket(),
                                         lotteryRequest.price(),
                                         lotteryRequest.amount()
                                     );
-        lotteryRepository.save(ticket);
+        lotteryRepository.save(lottery);
     }
     @Transactional
     public String buyLottery(String userId,String ticketId){
@@ -61,19 +61,15 @@ public class LotteryService {
         if(listUserTicket.isEmpty())
             throw new LotteryException("ticket" + ticketId + "or user id" + userId+ "does not exist");
 
-        for (UserTicket userTicket:listUserTicket) {
-            Lottery lottery = userTicket.getLottery();
-            lottery.incAmount();
-            lotteryRepository.save(lottery);
-        }
+        Lottery lottery = listUserTicket.get(0).getLottery();
+        lottery.addAmount(listUserTicket.size());
+        lotteryRepository.save(lottery);
         userTicketRepository.deleteByUserIdAndTicket(userId,ticketId);
     }
 
     public List<Lottery> getAllLotteries(){
         return lotteryRepository.findAll();
     }
-
-
 
     public List<Lottery> getAllAvailableLotteries(){
         return lotteryRepository.findAllAvailableLotteries();

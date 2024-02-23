@@ -1,6 +1,16 @@
 package com.kbtg.bootcamp.posttest.lottery;
 
 
-public  record LotteryRequest(String ticket, int price, int amount){
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
+
+public  record LotteryRequest(@NotNull
+                              @Pattern(regexp="[\\d]{6}")
+                              String ticket,
+                              @NotNull
+                              int price,
+                              @NotNull
+                              int amount){
 
 }
