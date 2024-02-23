@@ -4,13 +4,15 @@ networks:
   integration-test-example:
 
 services:
-  it_test:
+  app:
     image: app:latest
     volumes:
       - /app
     working_dir: /app
     ports:
       - "8888:8080"
+    environment:
+       DATABASE_URL: jdbc:postgresql://posttestdb:5432/postgres
     networks:
       - integration-test-example
     command: ["java", "-jar", "build/libs/posttest-0.0.1-SNAPSHOT.jar"]
@@ -22,8 +24,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: mysecretpassword
       POSTGRES_DB: postgres
+
+    container_name: posttestdb
     restart: on-failure
     volumes:
-      - ./db:/docker-entrypoint-initdb.d/
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - integration-test-example
