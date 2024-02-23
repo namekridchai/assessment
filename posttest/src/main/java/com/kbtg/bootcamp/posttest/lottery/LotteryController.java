@@ -12,17 +12,17 @@ import java.util.Map;
 @RestController
 @RequestMapping("/lotteries")
 public class LotteryController {
-    private LotteryService lotteryService;
+	private LotteryService lotteryService;
 
-    public LotteryController(LotteryService lotteryService) {
-        this.lotteryService = lotteryService;
-    }
-    @GetMapping("")
-    public ResponseEntity<Object> getLottery(){
-        List<Lottery> lotteries = lotteryService.getAllAvailableLotteries();
+	public LotteryController(LotteryService lotteryService) {
+		this.lotteryService = lotteryService;
+	}
+	@GetMapping("")
+	public ResponseEntity<Object> getLottery(){
+		List<Lottery> lotteries = lotteryService.getAllAvailableLotteries();
 
-        Map<String,List<String>> data = new HashMap<>();
-        data.put("tickets", lotteries.stream().map(lottery -> lottery.getTicket()).toList());
-        return new ResponseEntity<>(data, HttpStatus.OK);
-    }
+		Map<String,List<String>> data = new HashMap<>();
+		data.put("tickets", lotteries.stream().map(lottery -> lottery.getTicket()).toList());
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
 }

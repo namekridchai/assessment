@@ -12,19 +12,19 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 
 public class SecurityConfig {
-    @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((requests) ->
-                        requests
-                                .requestMatchers("/admin/**").authenticated()
-                                .requestMatchers("/users/**").permitAll()
-                                .requestMatchers("/lotteries/**").permitAll()
+	@Bean
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+		return http
+				.csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests((requests) ->
+						requests
+								.requestMatchers("/admin/**").authenticated()
+								.requestMatchers("/users/**").permitAll()
+								.requestMatchers("/lotteries/**").permitAll()
 
-                               )
-                .httpBasic(withDefaults())
-                .build();
-    }
+							)
+				.httpBasic(withDefaults())
+				.build();
+	}
 
 }

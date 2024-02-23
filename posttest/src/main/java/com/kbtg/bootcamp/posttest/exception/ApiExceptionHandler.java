@@ -10,23 +10,23 @@ import java.time.ZonedDateTime;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(value = LotteryException.class)
-    public ResponseEntity<Object> handleLotteryException(LotteryException lotteryException){
-        ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse(
-                lotteryException.getMessage(),
-                HttpStatus.BAD_REQUEST,
-                ZonedDateTime.now()
-        );
-        return new ResponseEntity<>(apiExceptionResponse,HttpStatus.BAD_REQUEST);
-    }
+	@ExceptionHandler(value = LotteryException.class)
+	public ResponseEntity<Object> handleLotteryException(LotteryException lotteryException){
+		ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse(
+				lotteryException.getMessage(),
+				HttpStatus.BAD_REQUEST,
+				ZonedDateTime.now()
+		);
+		return new ResponseEntity<>(apiExceptionResponse,HttpStatus.BAD_REQUEST);
+	}
 
-    @ExceptionHandler(value = UserNotFoundException.class)
-    public ResponseEntity<Object> handleUserException(UserNotFoundException userNotFoundException){
-        ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse(
-                userNotFoundException.getMessage(),
-                HttpStatus.NOT_FOUND,
-                ZonedDateTime.now()
-        );
-        return new ResponseEntity<>(apiExceptionResponse,HttpStatus.NOT_FOUND);
-    }
+	@ExceptionHandler(value = UserNotFoundException.class)
+	public ResponseEntity<Object> handleUserException(UserNotFoundException userNotFoundException){
+		ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse(
+				userNotFoundException.getMessage(),
+				HttpStatus.NOT_FOUND,
+				ZonedDateTime.now()
+		);
+		return new ResponseEntity<>(apiExceptionResponse,HttpStatus.NOT_FOUND);
+	}
 }

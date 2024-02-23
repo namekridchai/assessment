@@ -6,11 +6,11 @@ import jakarta.validation.constraints.Pattern;
 
 
 public  record LotteryRequest(@NotNull
-                              @Pattern(regexp="[\\d]{6}")
-                              String ticket,
-                              @NotNull
-                              int price,
-                              @NotNull
-                              int amount){
+							@Pattern(regexp="[\\d]{6}")
+							String ticket,
+							@NotNull
+							int price,
+							@NotNull
+							int amount){
 
 }

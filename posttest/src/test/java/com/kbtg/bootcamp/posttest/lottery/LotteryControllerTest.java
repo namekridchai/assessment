@@ -21,29 +21,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @ExtendWith(MockitoExtension.class)
 class LotteryControllerTest {
-    MockMvc mockMvc;
-    @Mock
-    LotteryService lotteryService;
+	MockMvc mockMvc;
+	@Mock
+	LotteryService lotteryService;
 
-    @BeforeEach
-    void setUp() {
-        LotteryController lotteryController = new LotteryController(lotteryService);
-        mockMvc = MockMvcBuilders.standaloneSetup(lotteryController)
+	@BeforeEach
+	void setUp() {
+		LotteryController lotteryController = new LotteryController(lotteryService);
+		mockMvc = MockMvcBuilders.standaloneSetup(lotteryController)
 //                .alwaysDo(print())
-                .build();
-    }
+				.build();
+	}
 
-    @Test
-    @DisplayName("when fetch lottery  GET: lotteries should return status 200 and body" +
-            " contain ticket numbers"
-    )
-    void fetchLottery() throws Exception {
+	@Test
+	@DisplayName("when fetch lottery  GET: lotteries should return status 200 and body" +
+			" contain ticket numbers"
+	)
+	void fetchLottery() throws Exception {
 
-        Lottery lottery1 = new Lottery();
-        lottery1.setTicket("123456");
-        when(lotteryService.getAllAvailableLotteries()).thenReturn(List.of(lottery1));
-        mockMvc.perform(get("/lotteries"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.tickets[0]", is("123456")));
-    }
+		Lottery lottery1 = new Lottery();
+		lottery1.setTicket("123456");
+		when(lotteryService.getAllAvailableLotteries()).thenReturn(List.of(lottery1));
+		mockMvc.perform(get("/lotteries"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.tickets[0]", is("123456")));
+	}
 }

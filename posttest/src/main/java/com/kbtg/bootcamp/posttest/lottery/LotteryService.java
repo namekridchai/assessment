@@ -12,66 +12,66 @@ import java.util.Optional;
 
 @Service
 public class LotteryService {
-    private final LotteryRepository lotteryRepository;
-    private final UserTicketRepository userTicketRepository;
+	private final LotteryRepository lotteryRepository;
+	private final UserTicketRepository userTicketRepository;
 
-    public LotteryService(LotteryRepository lotteryRepository,UserTicketRepository userTicketRepository) {
-        this.userTicketRepository = userTicketRepository;
-        this.lotteryRepository = lotteryRepository;
-    }
+	public LotteryService(LotteryRepository lotteryRepository,UserTicketRepository userTicketRepository) {
+		this.userTicketRepository = userTicketRepository;
+		this.lotteryRepository = lotteryRepository;
+	}
 
-    @Transactional
-    public void addLottery(LotteryRequest lotteryRequest){
-        Lottery lottery = new Lottery(   lotteryRequest.ticket(),
-                                        lotteryRequest.price(),
-                                        lotteryRequest.amount()
-                                    );
-        lotteryRepository.save(lottery);
-    }
-    @Transactional
-    public String buyLottery(String userId,String ticketId){
-        Optional<Lottery>  optionalLottery = lotteryRepository.findById(ticketId);
+	@Transactional
+	public void addLottery(LotteryRequest lotteryRequest){
+		Lottery lottery = new Lottery(   lotteryRequest.ticket(),
+										lotteryRequest.price(),
+										lotteryRequest.amount()
+									);
+		lotteryRepository.save(lottery);
+	}
+	@Transactional
+	public String buyLottery(String userId,String ticketId){
+		Optional<Lottery>  optionalLottery = lotteryRepository.findById(ticketId);
 
-        if(optionalLottery.isEmpty())
-            throw new LotteryException("ticket" + ticketId + "does not exist");
+		if(optionalLottery.isEmpty())
+			throw new LotteryException("ticket" + ticketId + "does not exist");
 
-        Lottery lottery = optionalLottery.get();
-        int totalAmount = lottery.getAmount();
+		Lottery lottery = optionalLottery.get();
+		int totalAmount = lottery.getAmount();
 
-        if(totalAmount<1)
-            throw new LotteryException("ticket" + ticketId + "out of stock");
+		if(totalAmount<1)
+			throw new LotteryException("ticket" + ticketId + "out of stock");
 
-        lottery.decAmount();
-        lotteryRepository.save(lottery);
+		lottery.decAmount();
+		lotteryRepository.save(lottery);
 
-        UserTicket userTicket = new UserTicket(     userId,
-                                                    lottery.getPrice()
+		UserTicket userTicket = new UserTicket(     userId,
+													lottery.getPrice()
 
-                                                );
+												);
 
-        userTicket.setLottery(lottery);
-        userTicketRepository.save(userTicket);
-        return Integer.toString(userTicket.getId()) ;
+		userTicket.setLottery(lottery);
+		userTicketRepository.save(userTicket);
+		return Integer.toString(userTicket.getId()) ;
 
-    }
-    @Transactional
-    public void sellLottery(String userId,String ticketId){
-        List<UserTicket> listUserTicket = userTicketRepository.findByUserIdAndTicket(userId,ticketId);
+	}
+	@Transactional
+	public void sellLottery(String userId,String ticketId){
+		List<UserTicket> listUserTicket = userTicketRepository.findByUserIdAndTicket(userId,ticketId);
 
-        if(listUserTicket.isEmpty())
-            throw new LotteryException("ticket" + ticketId + "or user id" + userId+ "does not exist");
+		if(listUserTicket.isEmpty())
+			throw new LotteryException("ticket" + ticketId + "or user id" + userId+ "does not exist");
 
-        Lottery lottery = listUserTicket.get(0).getLottery();
-        lottery.addAmount(listUserTicket.size());
-        lotteryRepository.save(lottery);
-        userTicketRepository.deleteByUserIdAndTicket(userId,ticketId);
-    }
+		Lottery lottery = listUserTicket.get(0).getLottery();
+		lottery.addAmount(listUserTicket.size());
+		lotteryRepository.save(lottery);
+		userTicketRepository.deleteByUserIdAndTicket(userId,ticketId);
+	}
 
-    public List<Lottery> getAllLotteries(){
-        return lotteryRepository.findAll();
-    }
+	public List<Lottery> getAllLotteries(){
+		return lotteryRepository.findAll();
+	}
 
-    public List<Lottery> getAllAvailableLotteries(){
-        return lotteryRepository.findAllAvailableLotteries();
-    }
+	public List<Lottery> getAllAvailableLotteries(){
+		return lotteryRepository.findAllAvailableLotteries();
+	}
 }
